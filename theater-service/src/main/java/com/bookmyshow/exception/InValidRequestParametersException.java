@@ -1,4 +1,4 @@
-package com.bookmyshow.exceptions;
+package com.bookmyshow.exception;
 
 public class InValidRequestParametersException extends Exception {
 

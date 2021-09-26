@@ -1,5 +1,5 @@
 server:
-  port: 8070
+  port: 8085
 
 eureka:
   client:
@@ -13,10 +13,14 @@ spring:
     config:
       uri:
       - http://${CONFIG_SERVER:localhost}:8888/
+  jpa:    show-sql: true
+    hibernate:      ddl-auto: none
+  datasource:    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://${RDS_HOSTNAME:localhost}:${RDS_PORT:3306}/${RDS_DB_NAME:theater}
+    username: ${RDS_USERNAME:theater}
+    password: ${RDS_PASSWORD:dummytheater}  
 
 feign:
-#  hystrix:
-#    enabled: true
   client:
     config:
       default:

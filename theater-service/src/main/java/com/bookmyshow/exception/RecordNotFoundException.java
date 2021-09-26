@@ -1,12 +1,5 @@
-/**
- * 
- */
-package com.logixal.common.exception;
+package com.bookmyshow.exception;
 
-/**
- * @author LSPL392
- *
- */
 public class RecordNotFoundException extends Exception {
 
 	private static final long serialVersionUID = -9079454849611061074L;

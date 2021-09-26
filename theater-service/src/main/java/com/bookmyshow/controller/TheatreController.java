@@ -3,42 +3,42 @@ package com.bookmyshow.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.lang.NonNull;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.bookmyshow.model.Screen;
 import com.bookmyshow.model.Theater;
-import com.bookmyshow.service.TheatreService;
+import com.bookmyshow.service.TheaterService;
 
 @RestController
+@RequestMapping("/theater")
 public class TheatreController {
     
 	@Autowired
-	private TheatreService theatreService;
+	private TheaterService theaterService;
 	
-    
-    @GetMapping("/moviebycity")
-    public ResponseEntity<String> getMovieByCity() {
-    	return new ResponseEntity<String>("", HttpStatus.OK);
+    @PostMapping("/create")
+    public ResponseEntity<Theater> createTheatre(Theater theater) {
+    	return new ResponseEntity<Theater>(theaterService.createTheatre(theater), HttpStatus.OK);
+    }
+
+    @PutMapping("/update")
+    public ResponseEntity<Theater> updateTheatre(Theater theater) {
+    	return new ResponseEntity<Theater>(theaterService.updateTheatre(theater), HttpStatus.OK);
     }
     
+    @DeleteMapping("/delete")
+    public void deleteTheatre(@RequestParam(name = "id") Long id) {
+        theaterService.deleteTheatre(id);
+    }
+
     @GetMapping("/getTheater")
-    public ResponseEntity<Theater> getTheater() {
-    	return new ResponseEntity<Theater>(t1, HttpStatus.OK);
-    }
-    
-    public String createTheatre(Theater theater) {
-        return theatreService.createTheatre(theater);
+    public ResponseEntity<Theater> getTheaterById(@RequestParam(name = "id") Long id) {
+    	return new ResponseEntity<Theater>(theaterService.getTheatreById(id), HttpStatus.OK);
     }
 
-    public String createScreenInTheatre(@NonNull final String screenName, @NonNull final String theatreId) throws Exception {
-        final Theater theatre = theatreService.getTheatre(theatreId);
-        return theatreService.createScreenInTheatre(screenName, theatre).getId();
-    }
-
-    public String createSeatInScreen(@NonNull final Integer rowNo, @NonNull final Integer seatNo, @NonNull final String screenId) throws Exception {
-        final Screen screen = theatreService.getScreen(screenId);
-        return theatreService.createSeatInScreen(rowNo, seatNo, screen).getId();
-    }
 }
